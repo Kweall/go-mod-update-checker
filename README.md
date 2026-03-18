@@ -1,6 +1,9 @@
 # Go Module Update Checker
 
-CLI-утилита для анализа Go модулей и проверки доступных обновлений зависимостей. Нужно лишь указать URL Git-репозитория и вы получите следующую информацию: Имя модуля, версию Go, список зависимостей, которые можно обновить.
+CLI-утилита для анализа Go модулей и проверки доступных обновлений зависимостей. Нужно лишь указать URL Git-репозитория и вы получите следующую информацию: 
+- Имя модуля;
+- Версию Go; 
+- Список зависимостей, которые можно обновить.
 
 ## Возможности
 
@@ -26,13 +29,13 @@ cd go-mod-update-checker
 
 ```bash
 # Простой анализ модуля
-go run ./cmd main.go -repo https://github.com/go-chi/chi
+go run ./cmd/main.go -repo https://github.com/go-chi/chi
 
 # Анализ с JSON выводом
-go run ./cmd main.go -repo https://github.com/go-chi/chi -json
+go run ./cmd/main.go -repo https://github.com/go-chi/chi -json
 
 # Показать справку
-go run ./cmd main.go -help
+go run ./cmd/main.go -help
 ```
 
 ### Пример вывода
