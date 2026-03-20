@@ -22,9 +22,7 @@ func Run(repoURL string, jsonOutput bool) error {
 		}
 	}()
 
-	if !jsonOutput {
-		fmt.Printf("Клонирование репозитория %s...\n", repoURL)
-	}
+	fmt.Fprintf(os.Stderr, "Клонирование репозитория %s...\n", repoURL)
 
 	// Клонирование репозитория
 	cloner := git.NewCloner()
@@ -38,9 +36,7 @@ func Run(repoURL string, jsonOutput bool) error {
 		return fmt.Errorf("не удалось найти go.mod: %w", err)
 	}
 
-	if !jsonOutput {
-		fmt.Println("Анализ модуля...")
-	}
+	fmt.Fprintln(os.Stderr, "Анализ модуля...")
 
 	// Получение информации о модуле
 	parser := module.NewParser()
