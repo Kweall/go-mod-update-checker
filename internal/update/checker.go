@@ -27,22 +27,12 @@ func NewChecker() *Checker {
 }
 
 // CheckUpdates проверяет обновления для всех зависимостей в модуле
-func (c *Checker) CheckUpdates(info *module.ModuleInfo) error {
-	// Временная директория с репозиторием
-	originalDir, err := os.Getwd()
-	if err != nil {
-		return err
-	}
-	defer os.Chdir(originalDir)
+func (c *Checker) CheckUpdates(info *module.ModuleInfo, tempDir string) error {
 
-	if err := os.Chdir(info.TempDir); err != nil {
-		return err
-	}
-
-	fmt.Println("Проверка доступных обновлений...")
+	fmt.Fprintln(os.Stderr, "Проверка доступных обновлений...")
 
 	for i, dep := range info.Dependencies {
-		latest, err := c.getLatestVersion(dep.Path)
+		latest, err := c.getLatestVersion(dep.Path, tempDir)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Предупреждение: не удалось получить последнюю версию для %s: %v\n", dep.Path, err)
 			continue
@@ -59,9 +49,10 @@ func (c *Checker) CheckUpdates(info *module.ModuleInfo) error {
 }
 
 // getLatestVersion получает последнюю версию модуля
-func (c *Checker) getLatestVersion(modulePath string) (string, error) {
+func (c *Checker) getLatestVersion(modulePath, tempDir string) (string, error) {
 	// Используем go list для получения последней версии
 	cmd := exec.Command("go", "list", "-m", "--versions", modulePath)
+	cmd.Dir = tempDir
 	output, err := cmd.Output()
 	if err != nil {
 		// Если не получилось, то пробуем через proxy

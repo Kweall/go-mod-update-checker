@@ -15,5 +15,4 @@ type ModuleInfo struct {
 	Name         string       `json:"name"`
 	GoVersion    string       `json:"go_version"`
 	Dependencies []Dependency `json:"dependencies"`
-	TempDir      string       `json:"-"`
 }

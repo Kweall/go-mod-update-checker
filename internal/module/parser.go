@@ -28,8 +28,13 @@ func (p *Parser) Parse(goModPath string) (*ModuleInfo, error) {
 	}
 
 	info := &ModuleInfo{
-		Name:      modFile.Module.Mod.Path,
-		GoVersion: modFile.Go.Version,
+		Name: modFile.Module.Mod.Path,
+	}
+
+	if modFile.Go != nil {
+		info.GoVersion = modFile.Go.Version
+	} else {
+		info.GoVersion = "unknown version"
 	}
 
 	// Проходимся по всем зависимостям
